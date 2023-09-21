@@ -131,7 +131,22 @@ body {
   --bs-btn-active-bg: var(--base-color);
   --bs-btn-active-border-color: var(--base-color);
 }
-
+.btn.submit-recipe-btn:hover,
+.btn.login:hover,
+.btn.btn-signup:hover {
+  --bs-btn-font-weight: 400;
+  --bs-btn-color: var(--bs-white);
+  --bs-btn-bg: #3838af;
+  --bs-btn-border-color: #3838af;
+  --bs-btn-border-radius: 0.5rem;
+  --bs-btn-hover-color: var(--bs-white);
+  --bs-btn-hover-bg: #3838af;
+  --bs-btn-hover-border-color: #3838af;
+  --bs-btn-focus-shadow-rgb: #3838af;
+  --bs-btn-active-color: var(--bs-white);
+  --bs-btn-active-bg: #3838af;
+  --bs-btn-active-border-color: #3838af;
+}
 .btn.cancel-btn {
   --bs-btn-font-weight: 400;
   --bs-btn-color: var(--base-color);
