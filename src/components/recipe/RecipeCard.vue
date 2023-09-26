@@ -5,7 +5,7 @@
       <div class="card-body" style="color: #0a0a0a">
         <p class="mb-0">{{ props.recipe.category }}</p>
         <div class="h-50">
-          <h4 class="fs-5 mb-0">{{ props.recipe.name }}</h4>
+          <h4 class="fs-5 mb-0" style="cursor: pointer" @click="goToDetail(props.recipe.id)">{{ props.recipe.name }}</h4>
         </div>
         <p>Recipe by {{ props.recipe.username }}</p>
       </div>
@@ -17,7 +17,23 @@
 </template>
 
 <script setup>
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 const props = defineProps({
   recipe: { type: Object },
 });
+const router = useRouter();
+const store = useStore();
+async function goToDetail(id) {
+  try {
+    await store.dispatch("getRecipeDetail", id);
+    router.push({
+      name: "detailPage",
+      params: { id },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
 </script>

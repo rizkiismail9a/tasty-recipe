@@ -1,11 +1,15 @@
 <template>
   <div>
     <WebHeader />
+
     <RouterView v-slot="{ Component }">
       <Transition name="page" mode="out-in">
-        <component :is="Component" />
+        <keep-alive>
+          <component :is="Component" />
+        </keep-alive>
       </Transition>
     </RouterView>
+
     <!-- <RouterView /> -->
     <WebFooter />
   </div>

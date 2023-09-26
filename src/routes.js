@@ -8,6 +8,11 @@ const router = createRouter({
     { path: "/", name: "homePage", component: HomePage },
     { path: "/signup", name: "signup", component: SignupPage },
     { path: "/login", name: "login", component: LoginPage },
+    {
+      path: "/recipe/:id",
+      name: "detailPage",
+      component: () => import("./components/pages/DetailPage.vue"),
+    },
   ],
   scrollBehavior(to, from, savedPosition) {
     return { top: 0 };

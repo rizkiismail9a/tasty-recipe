@@ -14,7 +14,7 @@ async function getRecipes() {
   try {
     await store.dispatch("getRecepiesData");
     recipes.value = store.getters.getRecipe;
-    console.log(recipes.value);
+    // console.log(recipes.value);
   } catch (error) {
     console.log(error);
   }
