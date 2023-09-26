@@ -6,12 +6,14 @@
         <component :is="Component" />
       </Transition>
     </RouterView>
+    <!-- <RouterView /> -->
     <WebFooter />
   </div>
 </template>
 
 <script setup>
 // import HomeView from "./components/pages/HomeView.vue";
+import { RouterView } from "vue-router";
 import WebFooter from "./components/footer/WebFooter.vue";
 import WebHeader from "./components/header/WebHeader.vue";
 </script>
