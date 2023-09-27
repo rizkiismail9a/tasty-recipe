@@ -49,10 +49,22 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
-import { useStore } from "vuex";
-const store = useStore();
-const recipeDetail = computed(() => {
-  return store.getters.getDetail;
+import { reactive } from "vue";
+// import { computed } from "vue";
+// import { useStore } from "vuex";
+// const store = useStore();
+// const recipeDetail = computed(() => {
+//   return store.getters.getDetail;
+// });
+import { useRoute } from "vue-router";
+const route = useRoute();
+const recipeDetail = reactive({
+  name: route.query.name,
+  description: route.query.description,
+  prepTime: route.query.prepTime,
+  cookTime: route.query.cookTime,
+  totalTime: route.query.totalTime,
+  imageLink: route.query.imageLink,
+  username: route.query.username,
 });
 </script>

@@ -16,10 +16,16 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
-import { useStore } from "vuex";
-const store = useStore();
-const recipeDetail = computed(() => {
-  return store.getters.getDetail;
+// import { computed } from "vue";
+// import { useStore } from "vuex";
+// const store = useStore();
+// const recipeDetail = computed(() => {
+//   return store.getters.getDetail;
+// });
+import { reactive } from "vue";
+import { useRoute } from "vue-router";
+const route = useRoute();
+const recipeDetail = reactive({
+  ingredients: route.query.ingredients,
 });
 </script>

@@ -4,9 +4,7 @@
 
     <RouterView v-slot="{ Component }">
       <Transition name="page" mode="out-in">
-        <keep-alive>
-          <component :is="Component" />
-        </keep-alive>
+        <component :is="Component" />
       </Transition>
     </RouterView>
 
