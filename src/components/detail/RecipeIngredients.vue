@@ -6,7 +6,7 @@
       </div>
       <div class="card-body">
         <ul class="mb-0">
-          <li v-for="(item, i) in recipeDetail.ingredients" :key="i">
+          <li v-for="(item, i) in recipeDetail.detailFromStore.ingredients" :key="i">
             {{ item }}
           </li>
         </ul>
@@ -16,16 +16,7 @@
 </template>
 
 <script setup>
-// import { computed } from "vue";
-// import { useStore } from "vuex";
-// const store = useStore();
-// const recipeDetail = computed(() => {
-//   return store.getters.getDetail;
-// });
-import { reactive } from "vue";
-import { useRoute } from "vue-router";
-const route = useRoute();
-const recipeDetail = reactive({
-  ingredients: route.query.ingredients,
+const recipeDetail = defineProps({
+  detailFromStore: { type: Object },
 });
 </script>

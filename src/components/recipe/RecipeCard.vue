@@ -2,7 +2,7 @@
   <div class="col-12 col-lg-3 col-sm-4 position-relative" style="padding-top: 12px; padding-bottom: 12px">
     <div class="card text-decoration-none" style="height: 398px">
       <img :src="props.recipe.imageLink" class="card-img-top" alt="Food" height="240" width="285" style="object-fit: cover" />
-      <div class="card-body" style="color: #0a0a0a">
+      <div class="card-body">
         <p class="mb-0">{{ props.recipe.category }}</p>
         <div class="h-50">
           <h4 class="fs-5 mb-0" style="cursor: pointer" @click="goToDetail">{{ props.recipe.name }}</h4>
@@ -25,20 +25,20 @@ const router = useRouter();
 
 async function goToDetail() {
   try {
-    router.replace({
+    router.push({
       name: "detailPage",
       params: { id: props.recipe.id },
-      query: {
-        name: props.recipe.name,
-        description: props.recipe.description,
-        prepTime: props.recipe.prepTime,
-        cookTime: props.recipe.cookTime,
-        totalTime: props.recipe.totalTime,
-        imageLink: props.recipe.imageLink,
-        username: props.recipe.username,
-        directions: props.recipe.directions,
-        ingredients: props.recipe.ingredients,
-      },
+      // query: {
+      //   name: props.recipe.name,
+      //   description: props.recipe.description,
+      //   prepTime: props.recipe.prepTime,
+      //   cookTime: props.recipe.cookTime,
+      //   totalTime: props.recipe.totalTime,
+      //   imageLink: props.recipe.imageLink,
+      //   username: props.recipe.username,
+      //   directions: props.recipe.directions,
+      //   ingredients: props.recipe.ingredients,
+      // },
     });
   } catch (error) {
     console.log(error);

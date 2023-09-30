@@ -19,4 +19,8 @@ const router = createRouter({
   },
 });
 
+router.beforeEach((to) => {
+  document.title = to.name + " | Tasty Recipe";
+});
+
 export { router };
