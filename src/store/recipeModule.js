@@ -26,7 +26,7 @@ const recipeModule = {
   actions: {
     getRecepiesData: async (context) => {
       try {
-        const { data } = await axios.get("https://recipe-vue-batch2-default-rtdb.firebaseio.com/recipes.json");
+        const { data } = await axios.get(import.meta.env.VITE_BASE_URI + "/recipes.json");
         const arr = [];
         for (let key in data) {
           arr.push({ id: key, ...data[key] });
@@ -38,7 +38,7 @@ const recipeModule = {
     },
     async getRecipeDetail({ commit }, payload) {
       try {
-        const { data } = await axios.get(`https://recipe-vue-batch2-default-rtdb.firebaseio.com/recipes/${payload}.json`);
+        const { data } = await axios.get(import.meta.env.VITE_BASE_URI + `/recipes/${payload}.json`);
         console.log("Ini data dari store", data);
         commit("setRecipeDetail", data);
       } catch (err) {
