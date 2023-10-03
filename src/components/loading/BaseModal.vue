@@ -1,10 +1,14 @@
 <template>
   <Teleport to="#modal">
-    <div class="modal__container">
-      <div class="modal__content">
-        <slot></slot>
+    <Transition name="modal-container">
+      <div class="modal__container d-flex position-fixed top-0 start-0 w-100 justify-content-center align-items-start">
+        <Transition name="modal-content">
+          <div class="modal__content">
+            <slot></slot>
+          </div>
+        </Transition>
       </div>
-    </div>
+    </Transition>
   </Teleport>
 </template>
 
@@ -12,22 +16,34 @@
 
 <style scoped>
 .modal__container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
   min-height: 100vh;
-  background-color: rgba(105, 105, 105, 0.349);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 30px;
   z-index: 999;
 }
 .modal__content {
-  background-color: #fff;
   max-width: 768px;
   padding: 14px;
   margin: 32px auto;
+}
+.modal-container-enter-active,
+.modal-container-leave-active {
+  transition: all 0.5s;
+}
+.modal-content-enter-active,
+.modal-content-leave-active {
+  transition: all 0.5s 0.15s;
+}
+.modal-container-enter-from,
+.modal-content-enter-from {
+  opacity: 0;
+}
+.modal-container-leave-to {
+  opacity: 0;
+}
+.modal-content-enter-from {
+  transform: translateY(300px);
+}
+.modal-content-leave-to {
+  opacity: 0;
+  transform: translateY(300px);
 }
 </style>

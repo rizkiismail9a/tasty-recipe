@@ -13,6 +13,11 @@ const router = createRouter({
       name: "detailPage",
       component: () => import("./components/pages/DetailPage.vue"),
     },
+    {
+      path: "/user/:component",
+      name: "userPage",
+      component: () => import("./components/pages/UserPage.vue"),
+    },
   ],
   scrollBehavior(to, from, savedPosition) {
     return { top: 0 };

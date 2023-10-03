@@ -1,4 +1,7 @@
 <template>
+  <base-modal v-if="errorMsg">
+    <div class="alert alert-danger" role="alert">{{ errorMsg }}</div>
+  </base-modal>
   <div class="container-fluid py-5" style="background-color: #f5f5f5">
     <div style="background-color: #ffffff" class="p-5 m-auto signup-form">
       <div class="text-center">
@@ -55,6 +58,7 @@
   </div>
 </template>
 <script setup>
+import BaseModal from "../loading/BaseModal.vue";
 import { reactive, ref } from "vue";
 import BaseButton from "../ui/BaseButton.vue";
 import BaseInput from "../ui/BaseInput.vue";
@@ -64,6 +68,7 @@ const store = useStore();
 const router = useRouter();
 const passwordStatusDisplay = ref("none");
 const passwordConfirmStatus = ref("none");
+const errorMsg = ref(null);
 const signupData = reactive({
   firstname: "",
   lastname: "",
@@ -75,7 +80,6 @@ const signupData = reactive({
   imageLink: "",
 });
 const passwordCheck = () => {
-  // signupData.password = data;
   if (signupData.password.length < 8) {
     passwordStatusDisplay.value = "block";
   } else {
@@ -83,7 +87,6 @@ const passwordCheck = () => {
   }
 };
 const passwordConfirmCheck = () => {
-  // signupData.confirmationPassword = data;
   if (signupData.confirmationPassword !== signupData.password) {
     passwordConfirmStatus.value = "block";
   } else {
@@ -108,15 +111,20 @@ async function register() {
   if (signupData.password !== signupData.confirmationPassword || signupData.password.length < 8) {
     signupData.confirmationPassword = "";
     signupData.password = "";
-    confirmPasswordDoesNotMacth.value = "none";
-    confirmPasswordMacth.value = "none";
-    return alert("Please fill the form correctly :)");
+    passwordConfirmStatus.value = "none";
+    errorMsg.value = "Please, fill the form correctly";
+    return setTimeout(() => {
+      errorMsg.value = null;
+    }, 3000);
   }
   try {
     await store.dispatch("auth/getRegData", signupData);
     router.push("/");
   } catch (error) {
-    console.log(error);
+    errorMsg.value = error;
+    setTimeout(() => {
+      errorMsg.value = null;
+    }, 3000);
   }
 }
 </script>
