@@ -12,8 +12,8 @@ const store = useStore();
 let recipes = ref(null);
 async function getRecipes() {
   try {
-    await store.dispatch("getRecepiesData");
-    recipes.value = store.getters.getRecipe;
+    await store.dispatch("recipe/getRecepiesData");
+    recipes.value = store.getters["recipe/getRecipe"];
     // console.log(recipes.value);
   } catch (error) {
     console.log(error);

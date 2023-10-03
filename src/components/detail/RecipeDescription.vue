@@ -43,7 +43,7 @@
       </div>
     </div>
     <div class="ps-lg-4 text-center">
-      <img :src="recipeDetail.detailFromStore.imageLink" alt="Food" class="w-100 recipe__detail-img rounded m-auto" style="object-fit: cover" />
+      <img :src="recipeDetail.detailFromStore.imageLink" alt="Food" class="recipe__detail-img rounded m-auto" style="object-fit: cover" />
     </div>
   </div>
 </template>

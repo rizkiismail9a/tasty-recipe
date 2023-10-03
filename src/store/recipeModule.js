@@ -1,5 +1,6 @@
 import axios from "axios";
 const recipeModule = {
+  namespaced: true,
   state() {
     return {
       recipes: [],

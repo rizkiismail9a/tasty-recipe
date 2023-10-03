@@ -25,7 +25,7 @@ const store = useStore();
 onMounted(async () => {
   try {
     isLoading.value = true;
-    await store.dispatch("getRecipeDetail", route.params.id);
+    await store.dispatch("recipe/getRecipeDetail", route.params.id);
     isLoading.value = false;
   } catch (error) {
     isLoading.value = true;
@@ -33,6 +33,6 @@ onMounted(async () => {
   }
 });
 const recipeData = computed(() => {
-  return store.getters.getDetail;
+  return store.getters["recipe/getDetail"];
 });
 </script>

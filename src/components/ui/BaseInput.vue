@@ -5,7 +5,16 @@
       <span style="color: #cb3a31">*</span>
       <slot></slot>
     </label>
-    <input :class="[{ 'd-none': isImage }, 'form-control']" :type="type" :id="identity" :placeholder="placeholder" :value="modelValue" :readonly="readonly === '1'" />
+    <input
+      :class="[{ 'd-none': isImage }, 'form-control']"
+      :type="type"
+      :id="identity"
+      :placeholder="placeholder"
+      :value="modelValue"
+      @input="$emit('update:modelValue', $event.target.value)"
+      :readonly="readonly === '1'"
+      @keyup="$emit('keyInput', $event.target.value)"
+    />
   </div>
 </template>
 <script setup>
@@ -16,5 +25,6 @@ defineProps({
   placeholder: { type: String, require: false },
   readonly: { type: String, require: true, default: "0" },
   isImage: { type: Boolean, require: true, default: false },
+  modelValue: { type: [String, Number] },
 });
 </script>

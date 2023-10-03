@@ -28,17 +28,6 @@ async function goToDetail() {
     router.push({
       name: "detailPage",
       params: { id: props.recipe.id },
-      // query: {
-      //   name: props.recipe.name,
-      //   description: props.recipe.description,
-      //   prepTime: props.recipe.prepTime,
-      //   cookTime: props.recipe.cookTime,
-      //   totalTime: props.recipe.totalTime,
-      //   imageLink: props.recipe.imageLink,
-      //   username: props.recipe.username,
-      //   directions: props.recipe.directions,
-      //   ingredients: props.recipe.ingredients,
-      // },
     });
   } catch (error) {
     console.log(error);
