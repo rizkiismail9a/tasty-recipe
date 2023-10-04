@@ -13,7 +13,8 @@
       :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
       :readonly="readonly === '1'"
-      @keyup="$emit('keyInput', $event.target.value)"
+      @keyup="$emit('keyInput')"
+      @focus="$emit('focusing')"
     />
   </div>
 </template>
