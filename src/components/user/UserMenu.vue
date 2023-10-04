@@ -3,10 +3,11 @@
     <ul class="list-group">
       <li class="list-group-item">
         <div class="d-flex align-items-center">
-          <img src="" alt="Profile" width="36" height="36" class="rounded-circle" style="object-fit: cover" />
+          <img v-if="loggedUser.imageLink" :src="loggedUser.imageLink" alt="Profile" width="36" height="36" class="rounded-circle" style="object-fit: cover" />
+          <img v-else src="../../assets/images/user.png" alt="Profile" width="36" height="36" class="rounded-circle" style="object-fit: cover" />
           <div class="ps-3">
-            <p class="my-0 fs-5 fw-semibold">Jack Daniel</p>
-            <p class="my-0 fs-6 text-secondary">jackdaniel@mail.com</p>
+            <p class="my-0 fs-5 fw-semibold">{{ loggedUser.firstname }} {{ loggedUser.lastname }}</p>
+            <p class="my-0 fs-6 text-secondary">{{ loggedUser.email }}</p>
           </div>
         </div>
       </li>
@@ -17,10 +18,16 @@
   </div>
 </template>
 <script setup>
+import { computed } from "vue";
+import { useStore } from "vuex";
 const emit = defineEmits(["changeComponent"]);
 const menuClicked = (option) => {
   emit("changeComponent", option);
 };
+const store = useStore();
+const loggedUser = computed(() => {
+  return store.state.auth.userLogin;
+});
 </script>
 <style scoped>
 .user-menu:hover {

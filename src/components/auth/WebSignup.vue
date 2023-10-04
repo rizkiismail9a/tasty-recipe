@@ -10,6 +10,11 @@
         <h2 class="mt-4">Create your account</h2>
         <p>Enter your details to use all the app features.</p>
       </div>
+      <div class="text-center mt-4">
+        <p class="fw-semibold">
+          Already have account?<span style="color: #4c4ddc"><router-link to="/login" class="text-decoration-none"> Login</router-link></span>
+        </p>
+      </div>
       <form class="mt-3" @submit.prevent="register">
         <div class="row">
           <div class="col-md-6">
@@ -50,11 +55,6 @@
 
         <base-button class="w-100 login my-3"> Register </base-button>
       </form>
-      <div class="text-center mt-4">
-        <p class="fw-semibold">
-          Already have account?<span style="color: #4c4ddc"><router-link to="/login" class="text-decoration-none"> Login</router-link></span>
-        </p>
-      </div>
     </div>
   </div>
 </template>

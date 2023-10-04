@@ -1,7 +1,11 @@
 <template>
-  <button class="btn rounded-pill">
+  <button class="btn rounded-pill" :type="type">
     <slot></slot>
   </button>
 </template>
 
-<script setup></script>
+<script setup>
+defineProps({
+  type: { type: String },
+});
+</script>

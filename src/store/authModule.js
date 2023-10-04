@@ -15,8 +15,8 @@ const auth = {
     setToken(state, payload) {
       state.accessToken = payload.idToken;
       state.tokenExpirationDate = payload.expiresIn;
-      Cookies.set("tokenExpirationDate", payload.expiresIn);
-      Cookies.set("accessToken", payload.idToken);
+      Cookies.set("tokenExpirationDate", payload.expiresIn, { sameSite: "None", secure: true, expires: 30 });
+      Cookies.set("accessToken", payload.idToken, { sameSite: "None", secure: true, expires: 30 });
     },
     setUserLogin(state, payload) {
       state.userLogin = payload.userData;
@@ -57,7 +57,7 @@ const auth = {
           email: payload.email,
           imageLink: payload.imageLink,
         };
-        Cookies.set("UID", newUserData.userId);
+        Cookies.set("UID", newUserData.userId, { sameSite: "None", secure: true, expires: 30 });
         await context.dispatch("addNewUser", newUserData);
       } catch (error) {
         throw new Error(error.response.data.error.message);
@@ -87,6 +87,7 @@ const auth = {
           idToken: data.idToken,
           expiresIn: new Date().getTime() + Number.parseInt(data.expiresIn) * 1000,
         });
+        Cookies.set("UID", data.localId, { sameSite: "None", secure: true, expires: 30 });
         await context.dispatch("getUser", data.localId);
       } catch (error) {
         throw new Error(error.response.data.error.message);

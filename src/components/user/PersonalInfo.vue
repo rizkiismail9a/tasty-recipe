@@ -14,12 +14,21 @@
           <p>Email</p>
         </div>
         <div class="ps-4 ms-4">
-          <p>Jack</p>
-          <p>Daniel</p>
-          <p>jackdaniel</p>
-          <p>jackdaniel@mail.com</p>
+          <p>{{ loggedUser.firstname }}</p>
+          <p>{{ loggedUser.lastname }}</p>
+          <p>{{ loggedUser.username }}</p>
+          <p>{{ loggedUser.email }}</p>
         </div>
       </div>
     </li>
   </ul>
 </template>
+<script setup>
+import { computed } from "vue";
+import { useStore } from "vuex";
+
+const store = useStore();
+const loggedUser = computed(() => {
+  return store.state.auth.userLogin;
+});
+</script>
