@@ -2,6 +2,7 @@
   <base-modal v-if="errorMsg">
     <div class="alert alert-danger" role="alert">{{ errorMsg }}</div>
   </base-modal>
+
   <div class="container-fluid py-5" style="background-color: #f5f5f5">
     <div style="background-color: #ffffff" class="p-5 m-auto signup-form">
       <div class="text-center">
@@ -128,3 +129,4 @@ async function register() {
   }
 }
 </script>
+<style scoped></style>

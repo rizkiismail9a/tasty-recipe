@@ -18,7 +18,7 @@
 </template>
 <script setup>
 const emit = defineEmits(["changeComponent"]);
-const menuClicked = () => {
+const menuClicked = (option) => {
   emit("changeComponent", option);
 };
 </script>
