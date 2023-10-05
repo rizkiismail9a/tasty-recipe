@@ -1,4 +1,7 @@
 <template>
+  <base-modal v-if="isLoading">
+    <div class="alert alert-primary" role="alert">Loading...</div>
+  </base-modal>
   <li class="list-group-item">
     <form @submit.prevent="addNewRecipe">
       <!-- General Information Start -->
@@ -8,6 +11,9 @@
           <!-- Image Start -->
           <div class="mb-3">
             <base-input type="file" identity="recipeImage" label="Recipe Image" @input="checkImage"></base-input>
+            <div>
+              <img :src="newRecipeData.imageLink" :alt="newRecipeData.name" class="image object-cover" width="300" />
+            </div>
           </div>
           <!-- Image End -->
 
@@ -115,7 +121,8 @@
         <!-- Cancel Button End -->
 
         <!-- Submit Button Start -->
-        <BaseButton class="new-ingredient-btn px-3 py-2" type="submit"> Submit </BaseButton>
+        <BaseButton class="new-ingredient-btn px-3 py-2" type="submit" v-if="!isEdit"> Submit </BaseButton>
+        <BaseButton class="new-ingredient-btn px-3 py-2" type="submit" v-if="isEdit"> Save </BaseButton>
         <!-- Submit Button End -->
       </div>
       <!-- Form Button End -->
@@ -123,20 +130,33 @@
   </li>
 </template>
 <script setup>
+import BaseModal from "../loading/BaseModal.vue";
 import BaseInput from "../ui/BaseInput.vue";
 import BaseButton from "../ui/BaseButton.vue";
 import BaseSelect from "../ui/BaseSelect.vue";
 import BaseTextarea from "../ui/BaseTextarea.vue";
-import { reactive, ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useStore } from "vuex";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+const isLoading = ref(false);
 const store = useStore();
 const router = useRouter();
-const newRecipeData = reactive({
+const route = useRoute();
+const props = defineProps({
+  isEdit: { type: Boolean, default: false },
+});
+onMounted(() => {
+  if (props.isEdit) {
+    newRecipeData.value = store.state.recipe.recipeOnDetail;
+    ingredientCount.value = newRecipeData.value.ingredients.length;
+    directionCount.value = newRecipeData.value.directions.length;
+  }
+});
+const newRecipeData = ref({
   imageLink: "",
   name: "",
   description: "",
-  category: "",
+  category: "Breakfast",
   prepTime: "",
   cookTime: "",
   totalTime: "",
@@ -152,30 +172,43 @@ function addDirection() {
   directionCount.value++;
 }
 function deleteIngredient(index) {
-  newRecipeData.ingredients.splice(index - 1, 1);
+  newRecipeData.value.ingredients.splice(index - 1, 1);
   ingredientCount.value--;
 }
 function deleteDirection(index) {
-  newRecipeData.directions.splice(index - 1, 1);
+  newRecipeData.value.directions.splice(index - 1, 1);
   directionCount.value--;
 }
 function sumTime() {
-  newRecipeData.totalTime = parseInt(newRecipeData.prepTime) + parseInt(newRecipeData.cookTime);
+  newRecipeData.value.totalTime = parseInt(newRecipeData.value.prepTime) + parseInt(newRecipeData.value.cookTime);
 }
 function checkImage(e) {
   const file = e.target.files[0];
   const reader = new FileReader();
   reader.readAsDataURL(file);
   reader.addEventListener("load", () => {
-    newRecipeData.imageLink = reader.result;
+    newRecipeData.value.imageLink = reader.result;
   });
 }
 async function addNewRecipe() {
-  try {
-    await store.dispatch("recipe/createNewRecipe", newRecipeData);
-    router.push("/user/user-recipe");
-  } catch (error) {
-    console.log(error);
+  if (props.isEdit) {
+    try {
+      isLoading.value = true;
+      await store.dispatch("recipe/editRecipe", { id: route.params.id, newRecipe: newRecipeData.value });
+      router.push("/user/user-recipe");
+      isLoading.value = false;
+    } catch (error) {
+      console.log(error);
+    }
+  } else {
+    try {
+      isLoading.value = true;
+      await store.dispatch("recipe/createNewRecipe", newRecipeData.value);
+      router.push("/user/user-recipe");
+      isLoading.value = false;
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 </script>

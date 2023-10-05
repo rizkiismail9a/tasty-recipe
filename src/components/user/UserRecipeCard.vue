@@ -18,7 +18,7 @@
           <button class="btn delete-btn px-3 py-2 rounded-pill" @click="$emit('delete', { id: recipe.id, index })">
             {{ buttonName[0] }}
           </button>
-          <button class="btn edit-btn px-3 py-2 rounded-pill">
+          <button class="btn edit-btn px-3 py-2 rounded-pill" @click="$emit('edit', recipe.id)">
             {{ buttonName[1] }}
           </button>
         </div>

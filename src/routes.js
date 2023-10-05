@@ -33,6 +33,14 @@ const router = createRouter({
       component: () => import("./components/pages/DetailPage.vue"),
     },
     {
+      path: "/recipe/edit/:id",
+      name: "Edit Recipe",
+      component: () => import("./components/pages/EditRecipePage.vue"),
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
       path: "/user/:component",
       name: "userPage",
       component: () => import("./components/pages/UserPage.vue"),

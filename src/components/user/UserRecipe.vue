@@ -24,7 +24,7 @@
       </div>
       <div class="row" v-else>
         <!-- User Recipe Card -->
-        <user-recipe-card v-for="(r, i) in recipes" :key="r.id" :recipe="r" :index="i" :button-name="['Delete', 'Edit']" @delete="deleteRecipe">
+        <user-recipe-card v-for="(r, i) in recipes" :key="r.id" :recipe="r" :index="i" :button-name="['Delete', 'Edit']" @delete="deleteRecipe" @edit="goToEditPage">
           <p>{{ new Date(r.createdAt).toLocaleDateString("en-EN", { weekday: "long", year: "numeric", month: "short", day: "numeric" }) }}</p>
         </user-recipe-card>
       </div>
@@ -32,6 +32,7 @@
   </ul>
 </template>
 <script setup>
+import { useRouter } from "vue-router";
 import BaseModal from "../loading/BaseModal.vue";
 import UserRecipeCard from "./UserRecipeCard.vue";
 import { computed, onMounted, ref } from "vue";
@@ -39,6 +40,7 @@ import { useStore } from "vuex";
 const loading = ref(false);
 const store = useStore();
 const showModal = ref(false);
+const router = useRouter();
 onMounted(async () => {
   try {
     loading.value = true;
@@ -64,5 +66,11 @@ async function deleteRecipe({ id, index }) {
   } catch (error) {
     console.log(error);
   }
+}
+async function goToEditPage(id) {
+  router.push({
+    name: "Edit Recipe",
+    params: { id },
+  });
 }
 </script>

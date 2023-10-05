@@ -78,6 +78,14 @@ const recipeModule = {
         console.log(error);
       }
     },
+    async editRecipe({ dispatch, rootState }, payload) {
+      try {
+        await axios.put(import.meta.env.VITE_BASE_URI + "/recipes/" + payload.id + ".json?auth=" + rootState.auth.accessToken, payload.newRecipe);
+        await dispatch("getRecipesData");
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
 };
 
