@@ -1,4 +1,7 @@
 <template>
+  <base-modal v-if="showModal">
+    <div class="alert alert-success" role="alert">Recipe's been deleted</div>
+  </base-modal>
   <ul class="list-group">
     <li class="list-group-item">
       <div class="d-flex flex-sm-row flex-column justify-content-between align-items-sm-center">
@@ -21,19 +24,21 @@
       </div>
       <div class="row" v-else>
         <!-- User Recipe Card -->
-        <user-recipe-card v-for="r in recipes" :key="r.id" :recipe="r" :button-name="['Delete', 'Edit']">
-          <p>{{ new Date(r.createdAt).toLocaleDateString("id-ID", { weekday: "long", year: "numeric", month: "long", day: "numeric" }) }}</p>
+        <user-recipe-card v-for="(r, i) in recipes" :key="r.id" :recipe="r" :index="i" :button-name="['Delete', 'Edit']" @delete="deleteRecipe">
+          <p>{{ new Date(r.createdAt).toLocaleDateString("en-EN", { weekday: "long", year: "numeric", month: "short", day: "numeric" }) }}</p>
         </user-recipe-card>
       </div>
     </li>
   </ul>
 </template>
 <script setup>
+import BaseModal from "../loading/BaseModal.vue";
 import UserRecipeCard from "./UserRecipeCard.vue";
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useStore } from "vuex";
 const loading = ref(false);
 const store = useStore();
+const showModal = ref(false);
 onMounted(async () => {
   try {
     loading.value = true;
@@ -48,4 +53,16 @@ const recipes = computed(() => {
   const userId = store.state.auth.userLogin.userId;
   return allRecipe.filter((recipe) => recipe.userId === userId);
 });
+async function deleteRecipe({ id, index }) {
+  try {
+    store.commit("recipe/spliceRecipe", index);
+    await store.dispatch("recipe/deleteRecipe", { id, index });
+    showModal.value = true;
+    setTimeout(() => {
+      showModal.value = false;
+    }, 4000);
+  } catch (error) {
+    console.log(error);
+  }
+}
 </script>

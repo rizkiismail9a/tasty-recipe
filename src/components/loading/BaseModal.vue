@@ -15,6 +15,7 @@
 <style scoped>
 .modal__container {
   min-height: 100vh;
+  z-index: 3;
 }
 .modal__content {
   max-width: 768px;

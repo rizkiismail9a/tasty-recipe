@@ -26,6 +26,9 @@ const recipeModule = {
     setNewRecipe: (state, payload) => {
       state.recipes.push(payload);
     },
+    spliceRecipe: (state, payload) => {
+      state.recipes.splice(payload, 1);
+    },
   },
   actions: {
     attemp: async (context) => {
@@ -64,6 +67,15 @@ const recipeModule = {
         await dispatch("getRecipesData");
       } catch (error) {
         throw new Error(error);
+      }
+    },
+    async deleteRecipe({ dispatch, rootState }, payload) {
+      try {
+        await axios.delete(import.meta.env.VITE_BASE_URI + `/recipes/${payload.id}.json?auth=${rootState.auth.accessToken}`);
+        // commit("spliceRecipe", payload.index);
+        await dispatch("getRecipesData");
+      } catch (error) {
+        console.log(error);
       }
     },
   },
