@@ -47,6 +47,7 @@ const auth = {
         context.commit("setToken", {
           idToken: data.idToken,
           expiresIn: new Date().getTime() + Number.parseInt(data.expiresIn) * 1000,
+          // Dikali seribu supaya jadi milisekon. Ini diperlukan untuk beforeEnter di router
         });
         // Setelah daftar, kita langsung update data user-nya berupa nama, username, dan foto
         const newUserData = {

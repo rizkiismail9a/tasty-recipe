@@ -12,7 +12,7 @@ const store = useStore();
 let recipes = ref(null);
 async function getRecipes() {
   try {
-    await store.dispatch("recipe/getRecepiesData");
+    await store.dispatch("recipe/getRecipesData");
     recipes.value = store.getters["recipe/getRecipe"];
     // console.log(recipes.value);
   } catch (error) {

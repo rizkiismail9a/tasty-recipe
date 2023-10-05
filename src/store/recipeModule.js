@@ -23,9 +23,15 @@ const recipeModule = {
       state.recipeOnDetail = null;
       state.recipeOnDetail = payload;
     },
+    setNewRecipe: (state, payload) => {
+      state.recipes.push(payload);
+    },
   },
   actions: {
-    getRecepiesData: async (context) => {
+    attemp: async (context) => {
+      await context.dispatch("getRecipesData");
+    },
+    getRecipesData: async (context) => {
       try {
         const { data } = await axios.get(import.meta.env.VITE_BASE_URI + "/recipes.json");
         const arr = [];
@@ -44,6 +50,20 @@ const recipeModule = {
         commit("setRecipeDetail", data);
       } catch (err) {
         console.log(err);
+      }
+    },
+    async createNewRecipe({ dispatch, rootState }, payload) {
+      try {
+        const newRecipe = {
+          ...payload,
+          username: rootState.auth.userLogin.username,
+          createdAt: Date.now(),
+          userId: rootState.auth.userLogin.userId,
+        };
+        await axios.post(import.meta.env.VITE_BASE_URI + `/recipes.json?auth=${rootState.auth.accessToken}`, newRecipe);
+        await dispatch("getRecipesData");
+      } catch (error) {
+        throw new Error(error);
       }
     },
   },
