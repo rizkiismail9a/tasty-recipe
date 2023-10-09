@@ -16,7 +16,7 @@ const router = createRouter({
       name: "signup",
       component: SignupPage,
       meta: {
-        requiresGuest: true,
+        forGuest: true,
       },
     },
     {
@@ -24,7 +24,7 @@ const router = createRouter({
       name: "login",
       component: LoginPage,
       meta: {
-        requiresGuest: true,
+        forGuest: true,
       },
     },
     {
@@ -37,7 +37,7 @@ const router = createRouter({
       name: "Edit Recipe",
       component: () => import("./components/pages/EditRecipePage.vue"),
       meta: {
-        requiresAuth: true,
+        forAuthedUser: true,
       },
     },
     {
@@ -45,7 +45,7 @@ const router = createRouter({
       name: "userPage",
       component: () => import("./components/pages/UserPage.vue"),
       meta: {
-        requiresAuth: true,
+        forAuthedUser: true,
       },
     },
     {
@@ -53,7 +53,7 @@ const router = createRouter({
       name: "New Recipe",
       component: () => import("./components/pages/NewRepicePage.vue"),
       meta: {
-        requiresAuth: true,
+        forAuthedUser: true,
       },
     },
   ],
@@ -64,9 +64,9 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   document.title = to.name + " | Tasty Recipe";
-  if (to.meta.requiresAuth && !store.state.auth.accessToken) {
+  if (to.meta.forAuthedUser && !store.state.auth.accessToken) {
     next({ name: "login" });
-  } else if (to.meta.requiresGuest && store.state.auth.accessToken) {
+  } else if (to.meta.forGuest && store.state.auth.accessToken) {
     next({ name: "homePage" });
   } else {
     next();
