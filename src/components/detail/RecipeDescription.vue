@@ -44,7 +44,7 @@
       </div>
     </div>
     <div class="ps-lg-4 text-center">
-      <img :src="props.detailFromStore.imageLink" alt="Food" class="recipe__detail-img rounded m-auto" style="object-fit: cover" />
+      <img :src="props.detailFromStore.imageLink" alt="Food" class="recipe__detail-img rounded m-auto w-100" style="object-fit: cover" />
     </div>
   </div>
 </template>
