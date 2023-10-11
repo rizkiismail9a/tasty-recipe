@@ -1,6 +1,6 @@
 <template>
-  <base-modal v-if="errorMsg">
-    <div class="alert alert-danger" role="alert">{{ errorMsg }}</div>
+  <base-modal v-if="errorMsg || isLoading">
+    <div class="alert" :class="{ 'alert-danger': errorMsg, 'alert-primary': isLoading }" role="alert">{{ errorMsg ? errorMsg : "Loading..." }}</div>
   </base-modal>
   <div class="container-fluid py-5" style="background-color: #f5f5f5">
     <div style="background-color: #ffffff; width: 400px min-height: 100vh;" class="p-5 m-auto login-form">
@@ -37,6 +37,7 @@ import { useRouter } from "vue-router";
 const errorMsg = ref(null);
 const store = useStore();
 const router = useRouter();
+const isLoading = ref(false);
 const loginData = reactive({
   email: "",
   password: "",
@@ -50,7 +51,9 @@ async function login() {
     }, 3000);
   }
   try {
+    isLoading.value = true;
     await store.dispatch("auth/getLoginData", loginData);
+    isLoading.value = false;
     router.push("/");
   } catch (error) {
     errorMsg.value = error;

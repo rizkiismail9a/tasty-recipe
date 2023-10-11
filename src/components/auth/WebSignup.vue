@@ -1,6 +1,6 @@
 <template>
-  <base-modal v-if="errorMsg">
-    <div class="alert alert-danger" role="alert">{{ errorMsg }}</div>
+  <base-modal v-if="errorMsg || isLoading">
+    <div class="alert" :class="{ 'alert-danger': errorMsg, 'alert-primary': isLoading }" role="alert">{{ errorMsg ? errorMsg : "Loading..." }}</div>
   </base-modal>
 
   <div class="container-fluid py-5" style="background-color: #f5f5f5">
@@ -70,6 +70,7 @@ const router = useRouter();
 const passwordStatusDisplay = ref("none");
 const passwordConfirmStatus = ref("none");
 const errorMsg = ref(null);
+const isLoading = ref(false);
 const signupData = reactive({
   firstname: "",
   lastname: "",
@@ -77,7 +78,6 @@ const signupData = reactive({
   email: "",
   password: "",
   confirmationPassword: "",
-  // isLogin: false,
   imageLink: "",
 });
 const passwordCheck = () => {
@@ -101,11 +101,6 @@ const checkImage = (e) => {
   reader.addEventListener("load", () => {
     signupData.imageLink = reader.result;
   });
-
-  // atau, namun, cara di bawah membuat gambar hanya bisa diakses sementara
-
-  // let link = URL.createObjectURL(image);
-  // return (signupData.imageLink = link);
 };
 
 async function register() {
@@ -119,7 +114,9 @@ async function register() {
     }, 3000);
   }
   try {
+    isLoading.value = true;
     await store.dispatch("auth/getRegData", signupData);
+    isLoading.value = false;
     router.push("/");
   } catch (error) {
     errorMsg.value = error;
@@ -129,4 +126,3 @@ async function register() {
   }
 }
 </script>
-<style scoped></style>
