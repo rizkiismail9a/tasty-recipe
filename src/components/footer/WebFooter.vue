@@ -3,7 +3,7 @@
     <div class="container-md">
       <div class="row">
         <div class="col-md-3 col-sm-5 col-12">
-          <img src="@/assets/images/Logo.png" alt="Logo" />
+          <img src="../../assets/images/logo.png" alt="Logo" />
           <p class="py-4 mb-1 fw-semibold fs-4">Follow us on</p>
           <div class="fs-3 pb-4" style="color: #4c4ddc">
             <i class="fa-brands fa-facebook pe-3"></i>
