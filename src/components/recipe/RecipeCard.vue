@@ -44,7 +44,7 @@ onMounted(() => {
 async function goToDetail() {
   try {
     router.push({
-      name: "detailPage",
+      name: "Detail",
       params: { id: props.recipe.id },
     });
   } catch (error) {

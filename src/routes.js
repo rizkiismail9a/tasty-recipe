@@ -8,12 +8,12 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      name: "homePage",
+      name: "Home",
       component: HomePage,
     },
     {
       path: "/signup",
-      name: "signup",
+      name: "Signup",
       component: SignupPage,
       meta: {
         forGuest: true,
@@ -21,7 +21,7 @@ const router = createRouter({
     },
     {
       path: "/login",
-      name: "login",
+      name: "Login",
       component: LoginPage,
       meta: {
         forGuest: true,
@@ -29,7 +29,7 @@ const router = createRouter({
     },
     {
       path: "/recipe/:id",
-      name: "detailPage",
+      name: "Detail",
       component: () => import("./components/pages/DetailPage.vue"),
     },
     {
@@ -42,7 +42,7 @@ const router = createRouter({
     },
     {
       path: "/user/:component",
-      name: "userPage",
+      name: "User",
       component: () => import("./components/pages/UserPage.vue"),
       meta: {
         forAuthedUser: true,
@@ -65,9 +65,9 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   document.title = to.name + " | Tasty Recipe";
   if (to.meta.forAuthedUser && !store.state.auth.accessToken) {
-    next({ name: "login" });
+    next({ name: "Login" });
   } else if (to.meta.forGuest && store.state.auth.accessToken) {
-    next({ name: "homePage" });
+    next({ name: "Home" });
   } else {
     next();
   }

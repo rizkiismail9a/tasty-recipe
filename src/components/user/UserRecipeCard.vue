@@ -37,7 +37,7 @@ const props = defineProps({
 const router = useRouter();
 function goToDetail(id) {
   router.push({
-    name: "detailPage",
+    name: "Detail",
     params: { id },
   });
 }
