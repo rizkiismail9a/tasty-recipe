@@ -162,6 +162,7 @@ const newRecipeData = ref({
   totalTime: "",
   ingredients: [],
   directions: [],
+  likes: [],
 });
 const ingredientCount = ref(1);
 const directionCount = ref(1);

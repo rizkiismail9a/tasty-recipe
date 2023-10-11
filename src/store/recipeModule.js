@@ -14,6 +14,9 @@ const recipeModule = {
     getDetail: (state) => {
       return state.recipeOnDetail;
     },
+    getLikes: (state) => {
+      return state.recipes.likes; // Likes ini berupa array
+    },
   },
   mutations: {
     setRecipesData: (state, payload) => {
@@ -49,7 +52,6 @@ const recipeModule = {
     async getRecipeDetail({ commit }, payload) {
       try {
         const { data } = await axios.get(import.meta.env.VITE_BASE_URI + `/recipes/${payload}.json`);
-        console.log("Ini data dari store", data);
         commit("setRecipeDetail", data);
       } catch (err) {
         console.log(err);
@@ -81,6 +83,35 @@ const recipeModule = {
     async editRecipe({ dispatch, rootState }, payload) {
       try {
         await axios.put(import.meta.env.VITE_BASE_URI + "/recipes/" + payload.id + ".json?auth=" + rootState.auth.accessToken, payload.newRecipe);
+        await dispatch("getRecipesData");
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async likeThePost({ dispatch, rootState }, { id }) {
+      try {
+        const { data } = await axios.get(import.meta.env.VITE_BASE_URI + `/recipes/${id}.json`);
+        const { likes } = data;
+        let key = likes.length + 1;
+        const userId = rootState.auth.userLogin.userId;
+        const newData = {
+          [key]: userId,
+          ...likes,
+        };
+        await axios.patch(import.meta.env.VITE_BASE_URI + "/recipes/" + id + "/likes.json?auth=" + rootState.auth.accessToken, newData);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async disLike({ rootState, dispatch }, payload) {
+      try {
+        const { data } = await axios.get(import.meta.env.VITE_BASE_URI + `/recipes/${payload.id}.json`);
+        const { likes } = data;
+        for (let key in likes) {
+          if (likes[key] === payload.userId) {
+            await axios.delete(import.meta.env.VITE_BASE_URI + "/recipes/" + payload.id + "/likes/" + key + ".json?auth=" + rootState.auth.accessToken);
+          }
+        }
         await dispatch("getRecipesData");
       } catch (error) {
         console.log(error);

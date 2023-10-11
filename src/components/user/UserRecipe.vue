@@ -57,7 +57,7 @@ const recipes = computed(() => {
 });
 async function deleteRecipe({ id, index }) {
   try {
-    store.commit("recipe/spliceRecipe", index);
+    // store.commit("recipe/spliceRecipe", index);
     await store.dispatch("recipe/deleteRecipe", { id, index });
     showModal.value = true;
     setTimeout(() => {

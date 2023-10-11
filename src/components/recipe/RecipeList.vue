@@ -9,12 +9,11 @@ import RecipeCard from "./RecipeCard.vue";
 import { useStore } from "vuex";
 import { ref } from "vue";
 const store = useStore();
-let recipes = ref(null);
+let recipes = ref([]);
 async function getRecipes() {
   try {
     await store.dispatch("recipe/getRecipesData");
     recipes.value = store.getters["recipe/getRecipe"];
-    // console.log(recipes.value);
   } catch (error) {
     console.log(error);
   }
