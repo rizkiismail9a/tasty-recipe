@@ -7,7 +7,7 @@
 <script setup>
 import RecipeCard from "./RecipeCard.vue";
 import { useStore } from "vuex";
-import { ref } from "vue";
+import { ref, watchEffect } from "vue";
 const store = useStore();
 let recipes = ref([]);
 async function getRecipes() {
@@ -18,5 +18,8 @@ async function getRecipes() {
     console.log(error);
   }
 }
+watchEffect(() => {
+  recipes.value = store.getters["recipe/getSearchResult"];
+});
 await getRecipes();
 </script>

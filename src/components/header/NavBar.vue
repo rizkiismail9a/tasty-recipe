@@ -11,6 +11,7 @@ import SignupMenu from "./SignupMenu.vue";
 import ProfileMenu from "./ProfileMenu.vue";
 import { watch, ref, computed } from "vue";
 const store = useStore();
+const emits = defineEmits(["search"]);
 const componentActive = ref("signup-menu");
 const components = {
   "signup-menu": SignupMenu,

@@ -4,6 +4,7 @@ const recipeModule = {
   state() {
     return {
       recipes: [],
+      searchResult: [],
       recipeOnDetail: {},
     };
   },
@@ -17,6 +18,7 @@ const recipeModule = {
     getLikes: (state) => {
       return state.recipes.likes; // Likes ini berupa array
     },
+    getSearchResult: (state) => state.searchResult,
   },
   mutations: {
     setRecipesData: (state, payload) => {
@@ -31,6 +33,10 @@ const recipeModule = {
     },
     spliceRecipe: (state, payload) => {
       state.recipes.splice(payload, 1);
+    },
+    setSearchRecipeResult(state, payload) {
+      const results = state.recipes.filter((item) => item.name.toLowerCase().includes(payload.keyword.toLowerCase()));
+      state.searchResult = results;
     },
   },
   actions: {
@@ -93,6 +99,7 @@ const recipeModule = {
         const { data } = await axios.get(import.meta.env.VITE_BASE_URI + `/recipes/${id}.json`);
         const { likes } = data;
         let key = likes.length + 1;
+        console.log(likes.length);
         const userId = rootState.auth.userLogin.userId;
         const newData = {
           [key]: userId,

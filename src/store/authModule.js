@@ -43,7 +43,7 @@ const auth = {
           password: payload.password,
           returnSecureToken: true,
         });
-        // console.log(data);
+        console.log(data);
         context.commit("setToken", {
           idToken: data.idToken,
           expiresIn: new Date().getTime() + Number.parseInt(data.expiresIn) * 1000,
@@ -67,8 +67,9 @@ const auth = {
     // Ini untuk bikin field baru di firebase
     async addNewUser(context, payload) {
       try {
-        await axios.post(import.meta.env.VITE_BASE_URI + `/users.json?auth=${context.state.accessToken}`, payload);
+        const { data } = await axios.post(import.meta.env.VITE_BASE_URI + `/users.json?auth=${context.state.accessToken}`, payload);
         context.commit("setUserLogin", { userData: payload, loginStatus: true });
+        console.log(data);
       } catch (error) {
         console.log(error);
       }
